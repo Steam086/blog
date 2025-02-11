@@ -1,7 +1,7 @@
 ---
 title: vllm notes
 type: docs
-# prev: docs/first-page
+prev: docs/vllm_notes
 # next: docs/folder/leaf
 sidebar:
   open: true
