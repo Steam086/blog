@@ -40,7 +40,7 @@ csrc
 
 判断一个Tensor是否为“弱连续”，弱连续的条件比`torch.Tensor.is_contiguous`宽松一些，代码如下。
 - definition
-```
+```Python
 def is_weak_contiguous(inp: torch.Tensor):
 
 return inp.is_contiguous() or (inp.storage().nbytes() -
@@ -55,7 +55,7 @@ inp.storage_offset() * inp.element_size()
 - 如下图所示，此时`is_weak_contiguous`返回True
 ![[Pasted image 20241218190221.png]]
 例如下面的程序输出为False，但是is_weak_contiguous输出为True，
-```
+```Python
 import torch
 
 # example 1 矩阵转置操作会导致is_contiguous返回False，
