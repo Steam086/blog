@@ -1,8 +1,8 @@
 ---
-date: '2025-02-11T16:36:38+08:00'
-# draft: true
-title: 'vllm与NCCL'
+date: 2025-02-11T16:36:38+08:00
+title: vllm与NCCL
 math: true
+type: blog
 ---
 vllm尝试使用了许多使用NCCL的方式，但是都没有很好的解决问题，最后使用Python脚本写了一个wrapper直接绑定NCCL的动态库。
 

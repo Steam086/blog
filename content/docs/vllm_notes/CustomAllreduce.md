@@ -1,8 +1,8 @@
 ---
-date: '2025-02-11T16:36:38+08:00'
-# draft: true
-title: 'CustomAllreduce'
+date: 2025-02-11T16:36:38+08:00
+title: CustomAllreduce
 math: true
+type: docs
 ---
 # 相关代码
 vllm
