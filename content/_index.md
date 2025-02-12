@@ -14,4 +14,4 @@ toc: false
 
 ## Documentation
 
-For more information, visit [Hextra](https://imfing.github.io/hextra).
+
