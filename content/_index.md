@@ -1,9 +1,9 @@
 ---
-title: My Site
+title: 我的笔记
 toc: false
 ---
 
-This is the landing page.
+
 
 ## Explore
 
