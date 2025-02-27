@@ -1,5 +1,5 @@
 ---
-title: 关机很慢
+title: 基于Ascend-vLLM的部署
 date: 2025-02-25T13:06:37+08:00
 draft: false
 math: true
@@ -44,10 +44,9 @@ load_model步骤拆解
 - 调用模型初始化代码（torch.empty）预分配对应dtype的空间
 - 加载模型参数download并load_weights
 
-Question：
-怎么把流水线并行他需要的模型的参数传给loader？？
-
-回答： 不做传递，判断是不是placeholder（PPMissingLayer），如果是，就不加载
+> Question：
+> 怎么把流水线并行他需要的模型的参数传给loader？？
+回答： 对于DefaultModelLoader，加载模型时会将所有权重的一并传递，逐个遍历判断是不是PPMissingLayer，如果是，就跳过
 #### 执行阶段：
 
 TODO 明天重点看worker和pipeline
