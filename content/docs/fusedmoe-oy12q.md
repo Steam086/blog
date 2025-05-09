@@ -62,3 +62,11 @@ if off_experts == -1:
 ### 阶段4: allreduce
 
 先进行dp的allreduce，再进行tp的allreduce
+
+‍
+
+‍
+
+test-pic
+
+![image](/images/image-20250509174153-gevn9hh.png)
