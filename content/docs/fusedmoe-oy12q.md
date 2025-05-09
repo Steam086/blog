@@ -31,8 +31,8 @@ isCJKLanguage: true
   shape: `(num_post_padding, )`​  
   按照专家排序并对每个专家处理的token数量进行padding后的token索引  
   下图是`expert_size=4, block_size=3`​的案例，此处的num_tokens_post_padded=18  
-  ​![Pasted image 20250509141640](/images/Pasted image 20250509141640-20250509172540-2449ex3.png)
-* ​`expert_ids`​  
+  ​![Pasted image 20250509141640](/images/Pasted image 20250509141640-20250509172540-2449ex3.png)​
+* `expert_ids`​  
   shape:  `(num_post_padding, )`​  
   ​`sorted_token_ids`​每个位置对应的专家id，用于在kernel中确定待处理的token是否属于local expert，如果不属于，则向输出矩阵中写入0,代码如下所示
 
