@@ -1,37 +1,28 @@
 ---
 title: 我的笔记
-toc: false
+# toc: false
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/style.css">
-</head>
-<body>
+以下是我的所有笔记列表，持续更新中。
+<!-- ## manba
+{{ define "main" }}
+<div class="posts">
+  {{ range .Site.RegularPages }}
+  <article class="post">
     <header>
-        <h1>{{ .Site.Title }}</h1>
+      <h2><a href="{{ .Permalink }}">{{ .File.LogicalName }}</a></h2>
     </header>
-    <main>
-        <h2>Blog Posts</h2>
-        <ul>
-            {{ range .Site.RegularPages }}
-                <li>
-                    <a href="{{ .Permalink }}">{{ .Title }}</a>
-                </li>
-            {{ end }}
-        </ul>
-    </main>
+    <section class="post-excerpt">
+      <p>{{ .Summary }}</p>
+    </section>
     <footer>
-        <p>&copy; {{ now.Format "2006" }} {{ .Site.Author.name }}</p>
+      <p class="post-date">Posted on {{ .Date.Format "January 2, 2006" }}</p>
     </footer>
-</body>
-</html>
+  </article>
+  {{ end }}
+</div>
+{{ end }}
 
-<!-- ## Explore
+## Explore
 
 {{< cards >}}
   {{< card link="docs" title="Docs" icon="book-open" >}}

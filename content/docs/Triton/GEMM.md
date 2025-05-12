@@ -1,3 +1,7 @@
+---
+title: "GEMM"
+math: true
+---
 GEMM公式：
 $$C = \alpha A \cdot B +\beta C$$
 简化处理这里仅讨论

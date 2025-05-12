@@ -1,6 +1,6 @@
 ---
 title: DeepSeek
 type: docs
-sidebar:
-  open: true
+# sidebar:
+#   open: true
 ---
