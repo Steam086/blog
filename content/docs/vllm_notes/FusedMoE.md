@@ -20,7 +20,7 @@ type: docs
 `shape = (num_post_padding, )`
 	按照专家排序并对每个专家处理的token数量进行padding后的token索引
 下图是`expert_size=4, block_size=3`的案例，此处的num_tokens_post_padded=18
-![alt text](<../images/Pasted image 20250509141640.png>)
+![alt text](image-2.png)
 
 - `expert_ids`
 `shape = (num_post_padding, )`
