@@ -51,9 +51,10 @@ inp.storage_offset() * inp.element_size()
 ```
 
 - 如果输入张量在内存中分布“没有间隔”，而且处于整个已分配空间的最后一部分，那么`is_weak_contiguous`返回值为True，如下图所示：此时is_weak_contiguous返回值为False
-![[Pasted image 20241218185931.png]]
+![alt text](image20241218185931.png)
 - 如下图所示，此时`is_weak_contiguous`返回True
-![[Pasted image 20241218190221.png]]
+
+![alt text](image20241218190221.png)
 例如下面的程序输出为False，但是is_weak_contiguous输出为True，
 ```Python
 import torch
