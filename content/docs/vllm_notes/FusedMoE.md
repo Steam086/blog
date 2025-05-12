@@ -6,18 +6,21 @@ type: docs
 ---
 ### 阶段1： dp广播
 若使用了dp，则在dp组内广播，此时所有的计算节点拥有相同的token
-### 阶段2: padding & sorting (MoE_align_block_size)
+### 阶段2:   moe_align_block_size(padding)
 输入：`topk_ids, expert_map=None`
-	在需要EP时传入expert_map，将本地专家id映射到本地专家id
+
+在需要EP时传入`expert_map`，将本地专家id映射到本地专家id
+
 输出：
 - `num_tokens_post_padded`
-padding操作之后的token总数（完全不padding的情况下这个值为`topk * num_tokens`）,padding之后保证每个专家处理的token数都能被block_size整除
 
-- `sorted_token_ids`
+	padding操作之后的token总数（完全不padding的情况下这个值为`topk * num_tokens`）,padding之后保证每个专家处理的token数都能被block_size整除
+
+- `sorted_token_ids`,
 `shape = (num_post_padding, )`
-按照专家排序并对每个专家处理的token数量进行padding后的token索引
+	按照专家排序并对每个专家处理的token数量进行padding后的token索引
 下图是`expert_size=4, block_size=3`的案例，此处的num_tokens_post_padded=18
-![[Pasted image 20250509141640.png]]
+![[docs/images/Pasted image 20250509141640.png]]
 
 - `expert_ids`
 `shape = (num_post_padding, )`
