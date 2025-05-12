@@ -7,22 +7,24 @@ type: docs
 ### 阶段1： dp广播
 若使用了dp，则在dp组内广播，此时所有的计算节点拥有相同的token
 ### 阶段2:   moe_align_block_size(padding)
-输入：`topk_ids, expert_map=None`
+**输入**：`topk_ids, expert_map=None`
 
 在需要EP时传入`expert_map`，将本地专家id映射到本地专家id
 
-输出：
-- `num_tokens_post_padded`
+**输出**：
+- `num_tokens_post_padded`:int
 
 	padding操作之后的token总数（完全不padding的情况下这个值为`topk * num_tokens`）,padding之后保证每个专家处理的token数都能被block_size整除
 
-- `sorted_token_ids`,
+- `sorted_token_ids`:torch.Tensor,
+
 `shape = (num_post_padding, )`
 	按照专家排序并对每个专家处理的token数量进行padding后的token索引
 下图是`expert_size=4, block_size=3`的案例，此处的num_tokens_post_padded=18
 ![alt text](image-2.png)
 
-- `expert_ids`
+- `expert_ids`:torch.Tensor
+
 `shape = (num_post_padding, )`
 `sorted_token_ids`每个位置对应的专家id，用于在kernel中确定待处理的token是否属于local expert，如果不属于，则向输出矩阵中写入0,代码如下所示
 ```Python
@@ -52,9 +54,7 @@ if off_experts == -1:
 
 先进行 DP 组内的 allreduce，只保留本地 token 的结果
 
-> Note
->
-> 这里的allreduce操作确实有冗余，但是涉及数据并行的情况一般都数据规模较大，某一个dp_rank节点上的token分散到各个节点上的概率更大，这时allreduce的通信冗余不再明显
+
 
 ```python
 if self.dp_size > 1:
