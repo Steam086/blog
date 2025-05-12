@@ -20,7 +20,7 @@ type: docs
 `shape = (num_post_padding, )`
 	按照专家排序并对每个专家处理的token数量进行padding后的token索引
 下图是`expert_size=4, block_size=3`的案例，此处的num_tokens_post_padded=18
-![[docs/images/Pasted image 20250509141640.png]]
+![alt text](<../images/Pasted image 20250509141640.png>)
 
 - `expert_ids`
 `shape = (num_post_padding, )`
@@ -50,4 +50,20 @@ if off_experts == -1:
 
 ### 阶段4: allreduce
 
-先进行dp的allreduce，再进行tp的allreduce
+先进行 DP 组内的 allreduce，只保留本地 token 的结果
+
+> Note
+>
+> 这里的allreduce操作确实有冗余，但是涉及数据并行的情况一般都数据规模较大，某一个dp_rank节点上的token分散到各个节点上的概率更大，这时allreduce的通信冗余不再明显
+
+```python
+if self.dp_size > 1:
+	start = 0 if self.dp_rank == 0 else cu_tokens_across_dp_cpu[
+		self.dp_rank - 1]
+	end = cu_tokens_across_dp_cpu[self.dp_rank]
+
+	all_hidden_states = get_dp_group().all_reduce(final_hidden_states)
+	final_hidden_states = all_hidden_states[start:end, :]
+```
+
+再进行 TP 组内的 allreduce
