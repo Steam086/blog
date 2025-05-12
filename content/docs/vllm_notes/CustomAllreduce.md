@@ -95,7 +95,7 @@ print(is_contiguous(c)) # False
 ## **register_graph_buffers**
 
 总是在capture上下文的最后调用，将capture上下文中执行的Allreduce代码中需要的input全部通过open_ipc_handle进行注册
-```
+```Python
 @contextmanager
 def capture(self):
 	try:
@@ -118,7 +118,7 @@ def capture(self):
 - **stage 1: reduce scatter**
   首先，节点中的所有GPU只负责一部分的reduce，比如对于一个GPU的rank=rank，它负责处理 `input[start:end]` ，其中
 
-  ```apache
+  ```C++
   part = size / ngpus; 
   start = rank * part ; 
   end = rank == world_size - 1 ? size : start + part; 
@@ -132,7 +132,7 @@ def capture(self):
 
 - 第一阶段
 
-```apache
+```Cpp
 for (int idx = start + tid; idx < end; idx += stride) {
     // 将reduce结果存入保存中间结果的共享内存
     tmp_shared_buf[rank][idx] = packed_reduce(ptrs,idx);//
@@ -141,7 +141,7 @@ for (int idx = start + tid; idx < end; idx += stride) {
 
 - 第2阶段：
 
-```apache
+```C
 // allgather操作
 for (int idx = tid; idx < largest_part; idx += stride) {
     for (int i = 0; i < ngpus; i++) {
