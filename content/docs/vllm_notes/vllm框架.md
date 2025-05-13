@@ -7,3 +7,6 @@
 - 进入serve函数 `uvloop.run(run_server(args))`
 - 在`run_server`函数中经过一系列的条件判断，执行`async with build_async_engine_client(args) as engine_client:`，根据命令行参数构建`engine_client`
 - `async def init_app_state`函数根据config初始化
+
+****
+

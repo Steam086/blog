@@ -159,8 +159,8 @@ for (int idx = tid; idx < largest_part; idx += stride) {
 visibility across devices is only guaranteed between threads that have the same tid.
 # ReduceScatter
 
-![](https://cdn.nlark.com/yuque/0/2024/png/32583568/1734110259288-a5efb5c4-9ab3-486c-9797-80a81cfa3363.png?x-oss-process=image%2Fformat%2Cwebp)
-四个设备的`reduce scatte`示意图
+![](image/image%201.png)
+四个设备的`reduce scatter`示意图
 
 第一阶段： `reduce`
 - 如上图所示，一个待reduce的Tensor，假设有4个设备rank1 2 3 4，在第一阶段时，每个GPU负责一个部分的reduce，如GPU1负责A区域的reduce，GPU2负责B区域以此类推。

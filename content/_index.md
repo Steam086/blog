@@ -2,33 +2,24 @@
 title: 我的笔记
 # toc: false
 ---
-以下是我的所有笔记列表，持续更新中。
-<!-- ## manba
-{{ define "main" }}
-<div class="posts">
+<style>
+    /* 设置两栏布局 */
+    ul {
+        columns: 3; /* 分成两栏 */
+        column-gap: 20px; /* 两栏之间的间距 */
+    }
+    li {
+        break-inside: avoid; /* 防止列表项被拆分到两栏 */
+    }
+</style>
+<p>以下是我的所有笔记列表，排版待优化。</p>
+<h2>我的笔记列表</h2>
+<ul>
   {{ range .Site.RegularPages }}
-  <article class="post">
-    <header>
-      <h2><a href="{{ .Permalink }}">{{ .File.LogicalName }}</a></h2>
-    </header>
-    <section class="post-excerpt">
-      <p>{{ .Summary }}</p>
-    </section>
-    <footer>
-      <p class="post-date">Posted on {{ .Date.Format "January 2, 2006" }}</p>
-    </footer>
-  </article>
+    <li>
+      <a href="{{ .RelPermalink }}">{{ .File.BaseFileName }}</a>
+    </li>
   {{ end }}
-</div>
-{{ end }}
-
-## Explore
-
-{{< cards >}}
-  {{< card link="docs" title="Docs" icon="book-open" >}}
-  {{< card link="about" title="About" icon="user" >}}
-{{< /cards >}}
-
-## Documentation -->
+</ul>
 
 

@@ -1,4 +1,5 @@
 ---
+title: CUDA线程模型
 date: '2025-02-11T16:36:38+08:00'
 # draft: true
 title: 'CUDA线程模型'
