@@ -13,10 +13,8 @@ math: true
 - **Grid**
 - **Block**
 - **Thread**
-Grid由多个Block组成
+Grid由多个Block组成，而Block由多个线程组成
 ![](image/Pasted%20image%2020250514163426.png)
-
-- SRAM：
 - **Shared Memory**：on-chip
 属于 SM，供 **同一个 Block 的线程共享**，访问速度接近寄存器，远快于全局内存，大小一般为 **48KB 或 96KB**，与 L1 Cache 通常**共享物理空间**
 - **L1 Cache**：

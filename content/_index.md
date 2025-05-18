@@ -2,7 +2,15 @@
 title: 我的笔记
 # toc: false
 ---
-<style>
+
+## Navigation
+
+{{< cards >}}
+  <!-- {{< card link="../about" title="About" >}} -->
+  {{< card link="../docs" title="Notes" >}}
+  {{< card link="../blog" title="Blog" >}}
+{{< /cards >}}
+<!-- <style>
     /* 设置两栏布局 */
     ul {
         columns: 3; /* 分成两栏 */
@@ -20,6 +28,6 @@ title: 我的笔记
       <a href="{{ .RelPermalink }}">{{ .File.BaseFileName }}</a>
     </li>
   {{ end }}
-</ul>
+</ul> -->
 
 

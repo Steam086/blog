@@ -4,6 +4,7 @@ title: FusedMoE
 math: false
 type: docs
 ---
+## vllm中FusedMoE的相关细节介绍
 ### 阶段1： DP广播
 若使用了DP，则在DP组内广播，此时所有的计算节点拥有相同的token
 ### 阶段2:   moe_align_block_size(padding)
