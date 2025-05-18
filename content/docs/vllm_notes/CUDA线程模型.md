@@ -11,3 +11,6 @@ CUDA编程的线程模型如下：
 ![](https://docs.nvidia.com/cuda/cuda-c-programming-guide/_images/memory-hierarchy.png)
 
 
+
+
+

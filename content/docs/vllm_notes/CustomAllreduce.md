@@ -88,14 +88,16 @@ print(is_contiguous(c)) # False
 
 创建共享内存并返回指向共享内存的指针$ptrs$,其中调用了CUDA内存分配函数，并使用OpenIpcHandle打开了其他同一node上其他设备的共享内存handle。
 
-## **capture**:
+## **capture**
 这个函数是一个 `@contextmanager`，主要目的是在graph_capture最后调用 `register_graph_buffers`，将所有allreduce用到的输入地址注册到rank_data中。
 
-解释：这个函数仅用于CUDA graph模式中，在CUDA graph 模式中，所有的操作不会立即被执行，CUDA会根据操作预先构建计算图，并一次性提交到GPU中执行，其中allreduce操作进行进程间通信需要将input注册到 `rank_data`中，这个注册的操作不会每次调用allreduce都执行一次，会在调用allreduce时将需要注册的ptr存入一个待注册数组（`graph_unreg_buffers_`）中，等到调用 `register_graph_buffers`时再将这些未被注册的ptr 进行 1. allgather获取其他进程中的handles。 2. 将这些获取到的handles打开并注册到 `rank_data`中
+解释：这个函数仅用于CUDA graph模式中，在CUDA graph 模式中，所有的操作不会立即被执行，CUDA会根据操作预先构建计算图，并一次性提交到GPU中执行，其中allreduce操作进行进程间通信需要将输入张量`input`注册到 `rank_data`中，这个注册的操作不会每次调用allreduce都执行一次，会在调用allreduce时将需要注册的ptr存入一个待注册数组（`graph_unreg_buffers_`）中，等到调用 `register_graph_buffers`时再将这些未被注册的ptr 进行 
+1. allgather获取其他进程中的handles。 
+2. 将这些获取到的handles打开并注册到 `rank_data`中
 
 ## **register_graph_buffers**
 
-总是在capture上下文的最后调用，将capture上下文中执行的Allreduce代码中需要的input全部通过open_ipc_handle进行注册
+总是在capture上下文的最后调用，将capture上下文中执行的Allreduce代码中需要的input全部通过`open_ipc_handle`进行注册
 ```Python
 @contextmanager
 def capture(self):
