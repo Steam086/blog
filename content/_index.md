@@ -7,8 +7,8 @@ title: 我的笔记
 
 {{< cards >}}
   <!-- {{< card link="../about" title="About" >}} -->
-  {{< card link="/blog/docs" title="Notes" >}}
-  {{< card link="/blog/blog" title="Blog" >}}
+  {{< card link="./docs" title="Notes" >}}
+  {{< card link="./blog" title="Blog" >}}
 {{< /cards >}}
 <!-- <style>
     /* 设置两栏布局 */

@@ -1,3 +1,9 @@
+---
+type: docs
+title: model_loader
+draft: false
+---
+
 ## weight_loader
 
 weight由model自行实现

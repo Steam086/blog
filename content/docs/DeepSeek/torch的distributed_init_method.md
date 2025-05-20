@@ -1,3 +1,7 @@
+---
+draft: true
+title: torch的distributed_init_method
+---
 
 默认为 `env://`，但是ray中多节点默认是`tcp://{ip}:{port}`,在主节点找到一个可用的端口，占用之后分发给worker节点
 
