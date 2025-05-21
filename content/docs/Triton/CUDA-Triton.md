@@ -7,7 +7,7 @@ type: blog
 
 ## CUDA 与 Triton 概述
 
-本概述旨在深入探讨 NVIDIA CUDA 编程模型及其内存层次结构、调度机制和同步方法，并进一步介绍 CUDA Stream 和 CUDA Graph 等高级优化技术。最后，我们将剖析 Triton 这一新兴的 GPU 编程语言，对比其与 CUDA 的异同，并揭示其在深度学习领域性能优化的独特优势。
+本概述探讨了 NVIDIA CUDA 编程模型及其内存层次结构、调度机制和同步方法，并进一步介绍 CUDA Stream 和 CUDA Graph 等技术。最后，我们将剖析 Triton 这一新兴的 GPU 编程语言，对比其与 CUDA 的异同，并揭示其相对CUDA的编程效率优势。
 
 
 
@@ -22,6 +22,7 @@ type: blog
 - **Grid**
 - **Block**
 - **Thread**
+
 Grid由多个Block组成，而Block由多个线程组成
 ![](image/Pasted%20image%2020250514163426.png)
 
@@ -229,12 +230,33 @@ for data, target in zip(real_inputs, real_targets):
 在第一次运行时Triton会在多个给定的参数下运行，确定最佳的`BLOCK_SIZE`
 2. Automatically schedule
 自动进行SMs内的调度，自动管理`Shared Memory`
-无需进行SM内的调度，但是
+无需进行SM内的调度，但是需要进行SMs之间的调度
 >Triton makes it possible to reach peak hardware performance with relatively little effort; for example, it can be used to write FP16 matrix multiplication kernels that match the performance of cuBLAS—something that many GPU programmers can’t do—in under 25 lines of code.
 ### CUDA与Triton的对比
 
-在 **CUDA 编程中，HBM（全局内存）中的数据访问是隐式的**，你只需要使用指针或数组访问即可，不需要显式调用像 `tl.load()` 这样的函数。但在 **Triton 中，`tl.load()` 是必须显式调用的**，因为 Triton 是基于 MLIR 的中间表示系统，需要你显式描述内存访问。
-![](image/gpu-architecture.svg)
+在 **CUDA 编程中，HBM（全局内存）中的数据访问是隐式的**，你只需要使用指针或数组访问即可，不需要显式调用像 `tl.load()` 这样的函数。但在 **Triton 中，`tl.load()` 是必须显式调用的**，Triton中对Tensor的操作是类torch的向量式操作，代码编写效率更高。
+
+简单的向量相加Triton Kernel：
+```Python
+import triton.language as tl
+
+@triton.jit
+def add(X, Y, Z, N):
+	pid = tl.program_id(0)
+	# block of indices
+	idx = pid * BLOCK + tl.arange(BLOCK)
+	mask = idx < N
+	# Triton uses pointer arithmetics
+	# rather than indexing operators
+	x = tl.load(X + idx, mask=mask)
+	y = tl.load(Y + idx, mask=mask)
+	tl.store(Z + idx, x + y, mask=mask)
+
+...
+grid = (tl.ceil_div(N, BLOCK),)
+# no thread-block
+add[grid](x, y, z, x.shape[0])
+```
 
 | 特性        | **Triton**                                                    | **CUDA**                  |
 | --------- | ------------------------------------------------------------- | ------------------------- |
