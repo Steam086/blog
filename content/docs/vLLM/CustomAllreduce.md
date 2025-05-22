@@ -4,6 +4,14 @@ title: CustomAllreduce
 math: true
 type: docs
 ---
+# allreduce操作的优先级
+vllm中处理allreduce的优先级是：
+- **CustomAllreduce**
+- Pynccl
+- torch.distributed
+其中，只有CustomAllreduce是out-place的，Pynccl和torch.distributed是in-place的
+
+torch.distributed在最后被考虑，因为：`torch.distributed.all_reduce` 包含许多其他潜在的 CUDA API，这些 API 在捕获 CUDA 图时是不允许的。 
 # 相关代码
 vllm
 - _custom_ops.py
@@ -51,10 +59,10 @@ inp.storage_offset() * inp.element_size()
 ```
 
 - 如果输入张量在内存中分布“没有间隔”，而且处于整个已分配空间的最后一部分，那么`is_weak_contiguous`返回值为True，如下图所示：此时is_weak_contiguous返回值为False
-![alt text](image20241218185931.png)
+![alt text](image/image20241218185931.png)
 - 如下图所示，此时`is_weak_contiguous`返回True
 
-![alt text](image20241218190221.png)
+![alt text](image/image20241218190221.png)
 例如下面的程序输出为False，但是is_weak_contiguous输出为True，
 ```Python
 import torch

@@ -1,3 +1,6 @@
+---
+title: Python与Linux环境变量作用域
+---
 
 ## Case 1-使用export
 假设有一个shell脚本如下：

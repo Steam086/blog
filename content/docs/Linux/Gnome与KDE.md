@@ -9,9 +9,10 @@ draft: false
 - 需要安装插件才有某些功能
 
 
-### Kubuntu（K D E）的缺点：
-- 部分软件**缩放**很吊诡
-- 分屏体验一般
+### Kubuntu（KDE）的缺点：
+- 部分软件**缩放**很吊诡 （可能是Wayland的锅）
+- 分屏体验一般（可能是Wayland的锅）
+
 优点：
 - 动画很不错，可定制性强
 
@@ -27,4 +28,6 @@ draft: false
 https://extensions.gnome.org/extension/261/kimpanel/
 终于，痛点解决
 
-不得不说K D E的有些动画做得很不错
+
+不得不说KDE的有些动画做得很不错
+但是我还是更推荐**Linux Mint**，基于Ubuntu的系统，小而美，输入法很正常

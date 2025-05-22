@@ -1,6 +1,5 @@
 ---
 type: docs
-draft: true
 title: Benchmark
 ---
 

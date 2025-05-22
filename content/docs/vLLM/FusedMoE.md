@@ -7,7 +7,9 @@ type: docs
 ## vllm中FusedMoE的相关细节介绍
 ### 阶段1： DP广播
 若使用了DP，则在DP组内广播，此时所有的计算节点拥有相同的token
-### 阶段2:   moe_align_block_size(padding)
+### 阶段2:   [moe_align_block_size](../moe_align_block_size)(padding)
+
+
 **输入**：**`(topk_ids, expert_map=None)`**
 
 - `topk_ids`是一个`shape = (num_tokens, topk)`的张量，`topk_ids[i]`表示第`i-1`个token路由到的`topk`个专家id
@@ -25,7 +27,7 @@ type: docs
 	按照专家id排序，并对每个专家处理的token数量进行padding后的token索引（此索引表示该token在`topk_ids`中的位置）
 	
 	下图是`expert_size=4, block_size=3`的案例，此处的num_tokens_post_padded=18
-![alt text](image-2.png)
+![alt text](image/image-2.png)
 > [!Important]
 > 这里说是按专家id进行排序，但是实际没有排序的逻辑（排序开销太大），`sorted_token_ids`是通过索引计算生成的，通过计算当前token前面有多少token来确定该toekn在`sorted_token_ids`中的位置
 - **`expert_ids`:torch.Tensor**

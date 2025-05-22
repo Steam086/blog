@@ -7,7 +7,7 @@ math: true
 
 ## vLLM中MoE层的`moe_align_block_size`细节介绍
 
-`moe_align_block_size`是Fused_MoE的前置步骤，目的是将经过路由后的token预处理为能进行专家计算的形式
+`moe_align_block_size`是[FusedMoE](../fusedmoe)的前置步骤，目的是将经过路由后的token预处理为能进行专家计算的形式
 
 ---
 
@@ -67,16 +67,15 @@ cumsum = torch.zeros((num_experts + 1, ),
 - `cumsum[i]`表示第i个专家之前的token数量，包括padding
 - `tokens_cnts`用来记录每个专家处理的token内部区间内已有多少token（动态变化的）
 两者共同确定当前token应该放在sorted_token_ids的哪个位置，因为并发度是`num_experts`,所以`tokens_cnts`的shape是`(num_experts + 1, num_experts)`用来记录多个线程处理的区间内的情况。
-2. 四个阶段
-- stage 1 （横向计算）
+2. 4个阶段
+其中只有stage 3 为单线程，其余线程数均为`num_experts`
+- **stage 1**  （横向计算）
 	多线程计算每个部分的cumsum
-- stage 2 （竖向相加）
+- **stage 2**  （竖向相加）
 	将上一步计算的每一个部分加起来
 加起来
-- stage 3 单线程（考虑padding计算出`cumsum`和`num_tokens_post_pad`）
+- **stage 3**  单线程（考虑padding计算出`cumsum`和`num_tokens_post_pad`）
 	计算`num_tokens_post_pad`，计算包括padding的`cumsum`
-- stage 4
-	根据前面三个阶段的计算结果生成`sorted_token_ids`
-	
-	这一步需要使用到`tokens_cnts`和`cumsum`来确定每个token在sorted_token_ids中的索引
+- **stage 4**
+	根据前面三个阶段的计算结果生成`sorted_token_ids`，这一步需要使用到`tokens_cnts`和`cumsum`来确定每个token在sorted_token_ids中的索引
 
