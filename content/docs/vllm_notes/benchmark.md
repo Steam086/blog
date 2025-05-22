@@ -1,3 +1,8 @@
+---
+type: docs
+draft: true
+title: Benchmark
+---
 
 ### 1. 在统计kernel执行时间时，不要使用time.time()来计算
 
