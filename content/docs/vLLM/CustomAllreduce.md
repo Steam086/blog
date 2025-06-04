@@ -20,7 +20,7 @@ vllm
 	- device_communicators
 		- custom_all_reduce.py
 csrc
-- custom_all_reduce.cuh
+- **custom_all_reduce.cuh**
 - custom_all_reduce.cu
 
 关键细节可以直接跳转到：[Reduce Scatter](#ReduceScatter)

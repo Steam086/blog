@@ -7,7 +7,7 @@ math: true
 
 ## vLLM中MoE层的`moe_align_block_size`细节介绍
 
-`moe_align_block_size`是[FusedMoE](../fusedmoe)的前置步骤，目的是将经过路由后的token预处理为能进行专家计算的形式
+`moe_align_block_size`是[FusedMoE](../fusedmoe)的前置步骤，目的是将经过路由后的token预处理为能方便与权重计算的形式
 
 ---
 
@@ -18,6 +18,7 @@ math: true
 `topk_ids` 
 
 经过moe路由后的结果，`topk_ids`表示每个token对应的专家id，`topk_weights`表示`topk_ids`对应的专家的路由权重，两者shape一致。
+
 **输出：**
 `sorted_token_ids`按照专家id排序并padding的`topk_ids`索引
 
