@@ -4,6 +4,12 @@ date: '2025-02-11T16:36:38+08:00'
 title: 'Cmake与Python Module'
 math: true
 ---
+# TODO
+补充：
+1. Python动态编译库
+2. CMakeLists.txt 样例和configure参数
+
+
 description：
 如何使用Pytorch调用C++中实现的自定义op
 ### command line
@@ -72,6 +78,3 @@ import vllm._moe_C
 ```
 将模块导入，以便后面调用
 torch.ops._C.xxx()
-
-
-![[Pasted image 20250225131020.png]]

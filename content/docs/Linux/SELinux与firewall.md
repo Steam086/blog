@@ -1,3 +1,6 @@
+---
+title: SELinux与firewall
+---
 
 ### 关于Fedora上的samba服务器无法被访问，显示access denied
 

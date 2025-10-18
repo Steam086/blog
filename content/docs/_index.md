@@ -2,7 +2,7 @@
 title: Documentation
 ---
 
-This is a demo of the theme's documentation layout.
+Blogs and Docs
 
 ## Hello, World!
 
