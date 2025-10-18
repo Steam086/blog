@@ -46,3 +46,7 @@ params:
   editURL:
     enable: true
     base: "https://github.com/Steam086/blog/edit/main/content"
+
+ignoreFiles:
+  - "\\.excalidraw\\.md$"
+  - "\\.excalidraw$"
